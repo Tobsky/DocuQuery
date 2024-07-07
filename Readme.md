@@ -45,7 +45,7 @@ To run this application locally, follow these steps:
 
 ## Usage
 
-1.  Embedding Documents: Click the "Embed Documents" button to      process and embed the documents located in the ./us_census directory.
+1.  Embedding Documents: Click the "Embed Documents" button to      process and embed the documents located in the ./PDFdocs directory.
 2.  Ask a Question: Enter your question in the text input field and press Enter. The app will retrieve relevant documents and provide an answer based on the context.
 3.  View Similar Documents: Expand the "Document Similarity Search" section to view similar documents related to your query.
 
@@ -67,7 +67,7 @@ To run this application locally, follow these steps:
 ### Common Errors
 1. Rate Limit Error: If you exceed the API quota, consider upgrading your OpenAI plan or reducing the number of API calls.
 2. Environment Variable Errors: Ensure your .env file is correctly set up with valid API keys.
-3. Document Loading Issues: Verify that the document directory (./us_census) exists and contains valid PDF files.
+3. Document Loading Issues: Verify that the document directory (./PDFdocs) exists and contains valid PDF files.
 
 ## Contributing
 

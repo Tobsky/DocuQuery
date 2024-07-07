@@ -38,14 +38,24 @@ prompt = ChatPromptTemplate.from_template(
 )
 
 #@st.cache # Cache for later use by the client code when the template is loaded
-def vector_embedding():
-    if "vectors" not in st.session_state:
+def init_faiss_index():
+    if "embeddings" not in st.session_state:
+            st.session_state.embeddings = OpenAIEmbeddings()
+
+    if os.path.exists("faiss_index"):
+        st.session_state.vectors = FAISS.load_local("faiss_index", st.session_state.embeddings, allow_dangerous_deserialization=True)
+        st.write("Loaded vectors from FAISS index.")
+    else:
         st.session_state.embeddings = OpenAIEmbeddings()
         st.session_state.loader = PyPDFDirectoryLoader("./PDFdocs") # Data Ingestion
         st.session_state.docs =st.session_state.loader.load() # Document Loading
         st.session_state.text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200) # Chunck creation
         st.session_state.final_documents = st.session_state.text_splitter.split_documents(st.session_state.docs[:50]) # Splitting
-        st.session_state.vectors = FAISS.from_documents(st.session_state.final_documents, st.session_state.embeddings) # Vector embeddings
+        # Embed documents and create FAISS index
+        st.session_state.vectors = FAISS.from_documents(st.session_state.final_documents, st.session_state.embeddings)
+
+        st.session_state.vectors.save_local("faiss_index")
+        st.write("Created and saved vectors to FAISS index.") 
 
 # Input field for user questions
 prompt1 = st.text_input("Enter Your Question From Documents")
@@ -54,7 +64,7 @@ prompt1 = st.text_input("Enter Your Question From Documents")
 if st.button("Documents Embedding"):
     with st.spinner("Embedding documents..."):
         try:
-            vector_embedding()
+            init_faiss_index()
             st.write("Vector Store DB Is Ready")
         except Exception as e:
             st.error(f"An error occurred during vector embedding: {e}")
