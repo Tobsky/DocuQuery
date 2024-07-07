@@ -1,2 +1,7 @@
 langchain
 openai
+langchain_groq
+python-dotenv
+streamlit
+faiss-cpu
+langchain_community
