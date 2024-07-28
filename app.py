@@ -15,7 +15,7 @@ import time
 load_dotenv()
 
 # Load the Groq and Openai API Key
-os.environ['OPENAI_API_KEY'] =os.getenv('OPENAI_API_KEY')
+# os.environ['OPENAI_API_KEY'] =os.getenv('OPENAI_API_KEY')
 groq_api_key = os.getenv('GROQ_API_KEY')
 
 # Streamlit app title
